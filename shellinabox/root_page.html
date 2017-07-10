@@ -124,16 +124,33 @@
           if (typeof ShellInABox == "function") {
             clearInterval(window.loginInterval);
             window.shell = new ShellInABox();
-            if (getQueryVariable("u")){
+            if (getQueryVariable("th")||getQueryVariable("s")){
               setTimeout(function(){
-                enterWord(getQueryVariable("u"))
-                if (getQueryVariable("p")){
+                enterWord("XXXX"); //set your user 
                   setTimeout(function(){
-                      enterWord(getQueryVariable("p"));
+                      enterWord("XXXXX"); //set your password
                       window.autologinpassword="";
-                  },getQueryVariable("d") || 2000);
-                }
-              }, 2000);
+                      if (getQueryVariable("th")){
+                        setTimeout(function(){
+                        enterWord('telnet '+getQueryVariable("th")+' '+getQueryVariable("tp")+'; exit');
+                        window.autologinpassword="";
+
+                           setTimeout(function(){
+                          // window.shell.sendKeys('t');
+                          },getQueryVariable("d") || 800);
+                        
+                        },getQueryVariable("d") || 800);
+                      }
+
+                      if (getQueryVariable("s")){
+                        setTimeout(function(){
+                        enterWord('ssh XXXX@'+getQueryVariable("s")+'; exit');
+                        window.autologinpassword="";
+                        
+                        },getQueryVariable("d") || 800);
+                      }
+                  },getQueryVariable("d") || 800);
+              }, 800);
             }
           }
         }, 500);
